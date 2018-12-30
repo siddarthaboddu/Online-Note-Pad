@@ -12,6 +12,7 @@ HomeRoutes.get('/',function(req,res){
     // res.send("Naruto");
     let siddu = "ohh shit";
     let email = req.session.email;
+    
     // res.render('home/index',{"scripts_path":scripts_path}); 
     res.render('home/index',{user_email: email});
 });

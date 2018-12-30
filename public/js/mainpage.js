@@ -29,3 +29,67 @@ function download(filename, text) {
 
     document.body.removeChild(element);
 }
+
+
+$("#formLoadFilebtn").on('click',function(event){
+    event.preventDefault();
+    
+    var formData = new FormData();
+    var file_tag = document.getElementById("imagefile");
+    var file = file_tag.files[0];
+    formData.append('file',file,file.name);
+
+    // $.ajax({
+    //     url: '/loadFile',
+    //     type: 'POST',
+    //     data: formData,
+    //     async: false,
+    //     success: function (data) {
+    //         alert("yes")
+    //     },
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false
+    // });
+
+    var settings = {
+        "async": true,
+        "url": "/loadFile",
+        "method": "POST",
+        "headers": {
+          "cache-control": "no-cache",
+          "Postman-Token": "de4856e7-a4a3-4a2f-8606-7105ed478086"
+        },
+        "processData": false,
+        "contentType": false,
+        "mimeType": "multipart/form-data",
+        "data": formData
+      }
+      
+      $.ajax(settings).done(function (response) {
+        $("textarea").text(response);
+      });
+
+});
+
+
+// $("form#formLoadFile").submit(function(){
+
+//     var formData = $(this).serialize();
+
+//     $.ajax({
+//         url: '/loadFile',
+//         type: 'POST',
+//         data: formData,
+//         async: false,
+//         success: function (data) {
+//             alert("yes")
+//         },
+//         cache: false,
+//         contentType: false,
+//         processData: false
+//     });
+
+//     return false;
+// });
+

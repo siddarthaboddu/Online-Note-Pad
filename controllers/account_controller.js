@@ -25,13 +25,25 @@ accountRoutes.post('/login',function(req,res){
     var matched_users_promise = models.User.findAll({
         where: Sequelize.and(
             {email: req.body.email},
-        )
+        ),
+        include: [{
+            model: models.Attachment,
+            as: 'attachments'
+        }] 
     });
     matched_users_promise.then(function(users){
         console.log('------------------------');
         console.log(users);
         if(users.length > 0){
             let user = users[0];
+            console.log('==================== assocations');
+            
+            // let attachment = user.attachment;
+            let attachments = user.attachments;
+            // console.log("--------------------first +  "+ attachment);
+            console.log("--------------------second +  "+ attachments);
+            
+            
             let passwordHash = user.password;
             if(bcrypt.compareSync(req.body.password,passwordHash)){
                 req.session.email = req.body.email;
