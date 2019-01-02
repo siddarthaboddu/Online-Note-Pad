@@ -17,11 +17,16 @@ var upload = multer({storage: storage});
 var path = require('path');
 var AttachmentRoutes = express.Router();
 
+// (Completed) show at front end contents of file uploaded 
 AttachmentRoutes.post('/fileUpload',upload.single('file'),(req,res,next)=>{
   res.send("fileuploaded   at public/images/uploads/" + req.file.filename+"   original name="+req.file.originalname);
 });
 
+
+
+// Save a text to a file which is entered at frontend
 AttachmentRoutes.post('/saveFile',(req,res)=>{
+  console.log(req.body);
   let data = req.body.text;
   console.log("fcckk   " + data);
   let filename = 'public/images/uploads/'+'file-'+Date.now()+'.txt';
@@ -35,6 +40,8 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
 
 });
 
+
+// (Completed) Load a file from front end and display in front end text area . dont save any file at backend(save and delete it immediately)
 AttachmentRoutes.post('/loadFile',upload.single('file'),(req,res,next)=>{
   console.log(req.body);
   console.log("asldjaljsdf "+req.file);

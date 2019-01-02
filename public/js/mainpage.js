@@ -30,6 +30,27 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
+$("#saveDataBtn").on('click',function(event){
+    var text = $("textarea").val();
+    console.log(text);
+    var data = {};
+    data["text"] = text;
+
+    if(text.trim("").length == 0){
+        alert("text is empty")
+        
+    }
+    else{
+        $.ajax({
+            url: '/saveFile',
+            type: 'POST',
+            data: data,
+            success: function(data){
+                alert('yes');
+            }
+        })
+    }
+});
 
 $("#formLoadFilebtn").on('click',function(event){
     event.preventDefault();
@@ -67,6 +88,7 @@ $("#formLoadFilebtn").on('click',function(event){
       }
       
       $.ajax(settings).done(function (response) {
+          console.log("received response fccc" + response.length );
         $("textarea").text(response);
       });
 
