@@ -19,9 +19,10 @@ accountRoutes.get('/login',function(req,res){
 });
 
 accountRoutes.post('/login',function(req,res){
-    console.log("narutoooo");
-    console.log(req.body);
-    console.log("sdknflkasjdf");
+    //  
+    //  
+    //
+      
     var matched_users_promise = models.User.findAll({
         where: Sequelize.and(
             {email: req.body.email},
@@ -32,21 +33,22 @@ accountRoutes.post('/login',function(req,res){
         }] 
     });
     matched_users_promise.then(function(users){
-        console.log('------------------------');
-        console.log(users);
+        //  
+        //  
         if(users.length > 0){
             let user = users[0];
-            console.log('==================== assocations');
+            //  
             
             // let attachment = user.attachment;
             let attachments = user.attachments;
-            // console.log("--------------------first +  "+ attachment);
-            console.log("--------------------second +  "+ attachments);
+            //  
+            //  
             
             
             let passwordHash = user.password;
             if(bcrypt.compareSync(req.body.password,passwordHash)){
                 req.session.email = req.body.email;
+                // res.redirect('/',{user_email: req.body.email});
                 res.redirect('/');
             }
             else{
@@ -73,8 +75,8 @@ accountRoutes.post('/register',function(req,res){
         
     });
     matched_users_promise.then(function(users){
-        console.log(users);
-        console.log("ljad length = "+users.length);
+        //  
+        //  
         if(users.length == 0){
             const passwordHash = bcrypt.hashSync(req.body.password,10);
             models.User.create({
@@ -82,10 +84,11 @@ accountRoutes.post('/register',function(req,res){
                 email: req.body.email,
                 password: passwordHash
             }).then(function(){
-                console.log(req.session);
+                //  
                 let newSession = req.session;
                 newSession.email = req.body.email;
-                console.log(req.session);
+                //  
+                // res.redirect('/',{user_email: newSession.email});
                 res.redirect('/');
             });
         }

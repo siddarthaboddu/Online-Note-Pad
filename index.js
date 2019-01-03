@@ -45,6 +45,21 @@ app.use(session({secret: 'skjadfhjweournssd'}));
 
 app.use('/',AccountRoutes.AccountRoutes);
 app.use('/',HomeRoutes.HomeRoutes);
+app.use('/static', express.static('public'))
+app.use(function(req,res,next){
+   console.log("yay");
+   console.log("req.session.email = "+req.session.email);
+  if(req.session.email == null || req.session.email.length ==0 ){
+    // req.method = "GET";
+    res.status(300).json({
+      redirect_url: '/login'
+  });
+    // res.redirect('/login');
+  }
+  else{
+    next();
+  }
+});
 
 //fileupload routes
 app.use('/',AttachmentRoutes.AttachmentRoutes);
@@ -52,5 +67,5 @@ app.use('/',AttachmentRoutes.AttachmentRoutes);
 
 
 // app.use(express.static('public'));
-app.use('/static', express.static('public'))
+
 app.listen(port);

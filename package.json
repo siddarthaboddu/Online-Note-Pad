@@ -4,7 +4,10 @@
   "description": "online notepad to write code , share and download",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:create": "node_modules/.bin/sequelize db:create",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

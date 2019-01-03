@@ -11,9 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-  <body>
-    <textarea style="height:80vh;width:100vw"></textarea>
-    <div class="" style="padding-left:25px">
+  <body class="container" style="width:98%">
+    <h1>logged in as <%= user_email %></h1>
+    <textarea class="row" style="height:80vh;width:100%"></textarea>
+    <div class="row" style="padding-left:25px">
       <div class="row">
         <div style="width:90%">
           <form id='formLoadFile'  action="loadFile" method="post" style="float:left">

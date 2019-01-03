@@ -13,7 +13,7 @@ for(var i=0;i<count;i++){
 
 var button = document.getElementById("download_btn");
 button.onclick = function(){
-    console.log($("textarea").val());
+     
     download("text.txt",$("textarea").val());
 }
 
@@ -32,7 +32,7 @@ function download(filename, text) {
 
 $("#saveDataBtn").on('click',function(event){
     var text = $("textarea").val();
-    console.log(text);
+     
     var data = {};
     data["text"] = text;
 
@@ -45,8 +45,17 @@ $("#saveDataBtn").on('click',function(event){
             url: '/saveFile',
             type: 'POST',
             data: data,
-            success: function(data){
-                alert('yes');
+            error: function(res){
+                if(res.status == 300){
+                    window.location.pathname = res.responseJSON["redirect_url"];
+                }
+                else{
+                    alert("Error saving file, relogin and refresh page");
+                }
+            },
+            success: function(res){
+                console.log(res);
+                alert("success");
             }
         })
     }
@@ -88,7 +97,7 @@ $("#formLoadFilebtn").on('click',function(event){
       }
       
       $.ajax(settings).done(function (response) {
-          console.log("received response fccc" + response.length );
+           
         $("textarea").text(response);
       });
 
