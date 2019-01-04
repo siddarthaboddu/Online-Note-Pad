@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="online note pad">
+    <meta name="author" content="siddartha boddu">
+    <title>EditNode</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body class="container">
+    <%= files.length %>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-xs-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <% for(var i=0;i<files.length;i++){ %>
+              <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"><%= files[i].original_file_name %> </a>
+          <% } %>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8 col-xs-8">
+        <textarea id="file-content" style="width:90%;height:90%"></textarea>
+      </div>
+    </div>
+    
+    <!-- <script src="/static/js/mainpage.js"></script> -->
+
+    <script>
+      (function($) { 
+        $('#list-tab a').on('click', function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+          console.log(this.text);
+          $("a").removeClass("active");
+          $(this).addClass("active");
+
+          var filename =this.text; 
+          $.post('/filecontent', {filename: filename}, function(response){ 
+                // alert("success");
+                console.log(response);
+                $("#file-content").text(response);
+          });
+
+
+
+          
+        });
+  
+        
+  
+      })(jQuery);
+    </script>
+  </body>
+</html>

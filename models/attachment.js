@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     file_name: DataTypes.STRING                     // filename of file created by code to store data
   }, {});
   Attachment.associate = function(models) {
-    // associations can be defined here
+    Attachment.belongsTo(models.User, { foreignKey:'user_id',as: 'user'} );
   };
   return Attachment;
 };

@@ -56,9 +56,31 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
         user_id: user.id,
         original_file_name: filename,   // file name given by customer
         file_name: filename            // filename of file created by code to store data
+      },{
+        include: [{
+          model: models.User,
+          as: 'user'
+        }]
       }).then(function(created_attachment){
         console.log("new attachment");
         console.log(created_attachment);
+        console.log("now attachment's user");
+        console.log(created_attachment.user);
+        attachments_promise = models.Attachment.findAll({
+          where: {
+            user_id: user.id
+          },
+          include: [{
+            model: models.User,
+            as: 'user'
+        }] 
+        });
+        attachments_promise.then(function(atts){
+          console.log("atts");
+          // console.log(atts);
+          console.log("first user");
+          console.log(atts[0].user);
+        });
         res.status("200");
         res.send("your text is saved");
       });
@@ -85,6 +107,58 @@ AttachmentRoutes.post('/loadFile',upload.single('file'),(req,res,next)=>{
   res.send(data);
 });
 
+AttachmentRoutes.get('/files',function(req,res){
+  user_promise = importantMethods.currentUser(req);
+  user_promise.then(function(user){
+    console.log("xxxxxxxxxxxxxxxxxxxxxxx");
+    console.log(user);
+    attachments_promise = models.Attachment.findAll({
+      where: {
+        user_id: user.id
+      }
+    });
+    attachments_promise.then(function(attachments){
+      // res.send(attachments);
+      res.render('attachments/index',{files: attachments});
+    });
+    // res.send(user);
+  });
+});
+
+
+AttachmentRoutes.post('/filecontent',function(req,res){
+  original_filename = req.body.filename;
+  user_promise = importantMethods.currentUser(req);
+  user_promise.then(function(user){
+    console.log("xxxxxxxxxxxxxxxxxxxxxxx");
+    console.log(user);
+    attachments_promise = models.Attachment.findAll({
+      where: {
+        original_file_name: original_filename
+      }
+    });
+    attachments_promise.then(function(attachments){
+      // res.send(attachments);
+      var filename = attachments[0].file_name;
+      let filepath = 'public/images/uploads/'+filename;
+      let content = "";
+      console.log("sasukeeeeeeeeeeeeeeeeee");
+      console.log(attachments);
+      console.log("hinataaaaaaaaaaaaaaa");
+      console.log(filepath);
+      fs.readFile(filepath, 'utf8', function(err, contents) {
+        content = content + contents;
+        console.log("narupoooooooooooooooooooo");
+        console.log(contents);
+        res.send(contents);
+      });
+      // res.render('attachments/index',{files: attachments});
+    });
+    // res.send(user);
+  });
+  
+
+});
 
 
 
