@@ -2,39 +2,113 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="online note pad">
     <meta name="author" content="siddartha boddu">
-    <title>EditNode</title>
+    <title>EditNote</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+          margin: 0;
+          font-family: "Lato", sans-serif;
+        }
+        
+        .sidebar {
+          margin: 0;
+          padding: 0;
+          width: 200px;
+          background-color: #f1f1f1;
+          position: fixed;
+          height: 100%;
+          overflow: auto;
+        }
+        
+        .sidebar a {
+          display: block;
+          color: black;
+          padding: 16px;
+          text-decoration: none;
+          margin-bottom: 10px;
+        }
+         
+        .sidebar a.active {
+          background-color: #4CAF50;
+          color: white;
+        }
+        
+        .sidebar a:hover:not(.active) {
+          background-color: #555;
+          color: white;
+        }
+        
+        div.content {
+          margin-left: 200px;
+          padding: 1px 16px;
+          height: 90vh;
+        }
+        
+        @media screen and (max-width: 700px) {
+          .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+          }
+          .sidebar a {float: left;}
+          div.content {margin-left: 0;}
+        }
+        
+        @media screen and (max-width: 400px) {
+          .sidebar a {
+            text-align: center;
+            float: none;
+          }
+        }
+        </style>
+
   </head>
-  <body class="container" style="width:98%">
-    <h1>logged in as <%= user_email %></h1>
-    <textarea class="row" style="height:75%;width:100%"></textarea>
-    <div class="row" style="padding-left:25px">
-      <div class="row">
-        <div style="width:90%">
-          <form id='formLoadFile'  action="loadFile" method="post" style="float:left">
-            <input id="imagefile" type="file" name="file" />  
-          </form>
-        </div>    
+  <body class="" >
+      <div class="sidebar">
+        <% if(user_email == null || user_email.length == 0) { %>
+          <a class="active" href="/login" >Login</a>
+          <a class="active" href="/register">Register</a>
+        <% } else{ %>
+          <a class="active" >Hi <%= user_email %></a>
+        <% } %>
+        <a class="" href="/files" >My Files</a>
+        <a id="download_btn">Download file</a>
+        <a id="formLoadFilebtn">Load your file to edit</a>
+        <a id="saveDataBtn">Save file to account</a>
+
+        <% if(user_email != null && user_email.length>0) { %>
+          <a class="active" href="/logout" >Logout</a>
+        <% }%>
+        <!-- <a href="#about">About</a> -->
+      </div>
+      <!-- <button id="download_btn">Download</button> -->
+      <!-- <button id="formLoadFilebtn" style="float:right">Load file</button> -->
+      <!-- <button id="saveDataBtn" style="float:right">save data</button> -->
+
+        
+      <div class="content">
+        
+        <div class="row" style="padding-left:25px;width:100%">
+          <div class="row">
+            <div >
+              <span>file name : </span><input type="text" name="filename" id="filename_input">
+              <form id='formLoadFile'  action="loadFile" method="post" style="float:right">
+                <input id="imagefile" type="file" name="file" />  
+              </form>
+            </div>    
+          </div>
+        </div>
+        <textarea class="row" style="height:100%;width:100%"></textarea>
+
       </div>
 
-      <div class="row">
-        <div class="col-md-3 col-lg-3 col-xs-3">
-          <button id="download_btn">Download</button>
-        </div>
-        <div class="col-md-3 col-lg-3 col-xs-3">
-          <button id="formLoadFilebtn" style="float:right">Load file</button>
-        </div>
-        <div class="col-md-3 col-lg-3 col-xs-3">
-          <button id="saveDataBtn" style="float:right">save data</button>
-        </div>
-      </div>
-    </div>
+    
     
     <script src="/static/js/mainpage.js"></script>
   </body>

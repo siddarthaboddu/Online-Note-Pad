@@ -104,4 +104,17 @@ accountRoutes.post('/register',function(req,res){
     
 });
 
+accountRoutes.get('/logout',function(req,res){
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+          if(err) {
+            return res.redirect('/');
+          } else {
+            return res.redirect('/');
+          }
+        });
+    }
+});
+
 module.exports = {"AccountRoutes" : accountRoutes};

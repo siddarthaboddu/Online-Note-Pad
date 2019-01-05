@@ -35,6 +35,7 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
    
   //  
   let data = req.body.text;
+  let user_give_filename = req.body.filename + ".txt";
   //  
   let filepath = 'public/images/uploads/'+'file-'+Date.now()+'.txt';
   let filename = 'file-'+Date.now()+'.txt';
@@ -54,7 +55,7 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
 
       models.Attachment.create({
         user_id: user.id,
-        original_file_name: filename,   // file name given by customer
+        original_file_name: user_give_filename,   // file name given by customer
         file_name: filename            // filename of file created by code to store data
       },{
         include: [{

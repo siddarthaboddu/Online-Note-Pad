@@ -13,8 +13,8 @@ for(var i=0;i<count;i++){
 
 var button = document.getElementById("download_btn");
 button.onclick = function(){
-     
-    download("text.txt",$("textarea").val());
+    var file_name = $("#filename_input").val();
+    download(file_name,$("textarea").val());
 }
 
 function download(filename, text) {
@@ -35,6 +35,7 @@ $("#saveDataBtn").on('click',function(event){
      
     var data = {};
     data["text"] = text;
+    data['filename'] = $("#filename_input").val();
 
     if(text.trim("").length == 0){
         alert("text is empty")
@@ -97,8 +98,9 @@ $("#formLoadFilebtn").on('click',function(event){
       }
       
       $.ajax(settings).done(function (response) {
-           
-        $("textarea").text(response);
+        console.log(response);
+        console.log($("textarea"));
+        $("textarea").val(response);
       });
 
 });
