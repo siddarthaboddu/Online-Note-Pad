@@ -49,12 +49,19 @@ app.use('/static', express.static('public'))
 app.use(function(req,res,next){
    console.log("yay");
    console.log("req.session.email = "+req.session.email);
+   console.log(req.method)
   if(req.session.email == null || req.session.email.length ==0 ){
     // req.method = "GET";
-    res.status(300).json({
-      redirect_url: '/login'
-  });
-    // res.redirect('/login');
+    console.log("dfmklasdfkasdkf;;askdfas;kd");
+    console.log("req.method  = "+req.method);
+    if(req.method=="GET"){
+      res.redirect('/login');
+    }
+    if(req.method == "POST"){
+      res.status(300).json({
+        redirect_url: '/login'
+      });
+    }
   }
   else{
     next();
