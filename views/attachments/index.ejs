@@ -12,10 +12,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body class="container">
-    <%= files.length %>
+    <h4>Number of files : <%= files.length %></h4>
     <div class="row">
       <div class="col-lg-4 col-md-4 col-xs-4">
-        <div class="list-group" id="list-tab" role="tablist">
+        <div class="list-group" id="list-tab" role="tablist" style="overflow-y: scroll; height:90%;">
           <% for(var i=0;i<files.length;i++){ %>
               <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"><%= files[i].original_file_name %> </a>
           <% } %>

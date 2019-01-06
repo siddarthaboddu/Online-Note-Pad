@@ -32,11 +32,14 @@ function download(filename, text) {
 
 $("#saveDataBtn").on('click',function(event){
     var text = $("textarea").val();
-     
+    
     var data = {};
     data["text"] = text;
     data['filename'] = $("#filename_input").val();
-
+    if(data['filename']  == null || data['filename'].length<1){
+        alert("enter filename");
+        return;
+    }
     if(text.trim("").length == 0){
         alert("text is empty")
         
