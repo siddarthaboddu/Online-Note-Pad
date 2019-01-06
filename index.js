@@ -47,13 +47,13 @@ app.use('/',AccountRoutes.AccountRoutes);
 app.use('/',HomeRoutes.HomeRoutes);
 app.use('/static', express.static('public'))
 app.use(function(req,res,next){
-   console.log("yay");
-   console.log("req.session.email = "+req.session.email);
-   console.log(req.method)
+   
+   
+   
   if(req.session.email == null || req.session.email.length ==0 ){
     // req.method = "GET";
-    console.log("dfmklasdfkasdkf;;askdfas;kd");
-    console.log("req.method  = "+req.method);
+    
+    
     if(req.method=="GET"){
       res.redirect('/login');
     }

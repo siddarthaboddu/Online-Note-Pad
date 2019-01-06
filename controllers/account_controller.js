@@ -41,10 +41,10 @@ accountRoutes.post('/login',function(req,res){
             
             // let attachment = user.attachment;
             let attachments = user.attachments;
-            console.log("gkgkgkgkgkgkgkkgkgkgkgkgkkgkgk");
-            console.log(attachments);
-            console.log("khkhkhkhkhkhkhkkhkhkhkkhkhkhkhkhk");
-            console.log("attachments size = " + attachments.length);
+            
+            
+            
+            
 
             //  
             //  

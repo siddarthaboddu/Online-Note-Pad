@@ -5,8 +5,8 @@ var exports = module.exports = {};
 
 exports.currentUser = function(req){
   let current_user = null;
-  console.log("-------------------------------");
-  console.log(req.session.email);
+  
+  
   return new Promise(function( resolve, reject){
     if(req.session.email != null && req.session.email.length > 0){
       var matched_users_promise = models.User.findAll({

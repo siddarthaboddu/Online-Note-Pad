@@ -33,14 +33,14 @@
         $('#list-tab a').on('click', function (e) {
           e.preventDefault();
           $(this).tab('show');
-          console.log(this.text);
+          
           $("a").removeClass("active");
           $(this).addClass("active");
 
           var filename =this.text; 
           $.post('/filecontent', {filename: filename}, function(response){ 
                 // alert("success");
-                console.log(response);
+                
                 $("#file-content").text(response);
           });
 

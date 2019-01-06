@@ -58,7 +58,7 @@ $("#saveDataBtn").on('click',function(event){
                 }
             },
             success: function(res){
-                console.log(res);
+                
                 alert("success");
             }
         })
@@ -101,8 +101,8 @@ $("#formLoadFilebtn").on('click',function(event){
       }
       
       $.ajax(settings).done(function (response) {
-        console.log(response);
-        console.log($("textarea"));
+        
+        
         $("textarea").val(response);
       });
 

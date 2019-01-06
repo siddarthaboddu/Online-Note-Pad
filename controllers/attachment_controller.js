@@ -40,13 +40,13 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
   let filepath = 'public/images/uploads/'+'file-'+Date.now()+'.txt';
   let filename = 'file-'+Date.now()+'.txt';
 
-  console.log("fccc");
-  console.log(importantMethods.currentUser(req));
+  
+  
 
   user_promise = importantMethods.currentUser(req);
   user_promise.then(function(user){
-    console.log("xxxxxxxxxxxxxxxxxxxxxxx");
-    console.log(user);
+    
+    
 
     fs.writeFile(filepath, data, function(err, data){
       if (err){
@@ -63,10 +63,10 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
           as: 'user'
         }]
       }).then(function(created_attachment){
-        console.log("new attachment");
-        console.log(created_attachment);
-        console.log("now attachment's user");
-        console.log(created_attachment.user);
+        
+        
+        
+        
         attachments_promise = models.Attachment.findAll({
           where: {
             user_id: user.id
@@ -77,10 +77,10 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
         }] 
         });
         attachments_promise.then(function(atts){
-          console.log("atts");
-          // console.log(atts);
-          console.log("first user");
-          console.log(atts[0].user);
+          
+          // 
+          
+          
         });
         res.status("200");
         res.send("your text is saved");
@@ -111,8 +111,8 @@ AttachmentRoutes.post('/loadFile',upload.single('file'),(req,res,next)=>{
 AttachmentRoutes.get('/files',function(req,res){
   user_promise = importantMethods.currentUser(req);
   user_promise.then(function(user){
-    console.log("xxxxxxxxxxxxxxxxxxxxxxx");
-    console.log(user);
+    
+    
     attachments_promise = models.Attachment.findAll({
       where: {
         user_id: user.id
@@ -131,8 +131,8 @@ AttachmentRoutes.post('/filecontent',function(req,res){
   original_filename = req.body.filename;
   user_promise = importantMethods.currentUser(req);
   user_promise.then(function(user){
-    console.log("xxxxxxxxxxxxxxxxxxxxxxx");
-    console.log(user);
+    
+    
     attachments_promise = models.Attachment.findAll({
       where: {
         original_file_name: original_filename
@@ -143,14 +143,14 @@ AttachmentRoutes.post('/filecontent',function(req,res){
       var filename = attachments[0].file_name;
       let filepath = 'public/images/uploads/'+filename;
       let content = "";
-      console.log("sasukeeeeeeeeeeeeeeeeee");
-      console.log(attachments);
-      console.log("hinataaaaaaaaaaaaaaa");
-      console.log(filepath);
+      
+      
+      
+      
       fs.readFile(filepath, 'utf8', function(err, contents) {
         content = content + contents;
-        console.log("narupoooooooooooooooooooo");
-        console.log(contents);
+        
+        
         res.send(contents);
       });
       // res.render('attachments/index',{files: attachments});
