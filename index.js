@@ -48,24 +48,28 @@ app.use('/',HomeRoutes.HomeRoutes);
 app.use('/static', express.static('public'))
 app.use(function(req,res,next){
    
-   
-   
-  if(req.session.email == null || req.session.email.length ==0 ){
-    // req.method = "GET";
-    
-    
-    if(req.method=="GET"){
-      res.redirect('/login');
-    }
-    if(req.method == "POST"){
-      res.status(300).json({
-        redirect_url: '/login'
-      });
-    }
-  }
-  else{
+  if(req.url == '/loadFile'){
     next();
   }
+  else{
+    if(req.session.email == null || req.session.email.length ==0 ){
+      // req.method = "GET";
+      
+      
+      if(req.method=="GET"){
+        res.redirect('/login');
+      }
+      if(req.method == "POST"){
+        res.status(300).json({
+          redirect_url: '/login'
+        });
+      }
+    }
+    else{
+      next();
+    }
+  }
+  
 });
 
 //fileupload routes
