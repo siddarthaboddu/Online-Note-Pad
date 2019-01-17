@@ -37,57 +37,66 @@ AttachmentRoutes.post('/saveFile',(req,res)=>{
   let data = req.body.text;
   let user_give_filename = req.body.filename + ".txt";
   //  
-  let filepath = 'public/images/uploads/'+'file-'+Date.now()+'.txt';
+
+  // models.Attachment.findOne()
   let filename = 'file-'+Date.now()+'.txt';
+  let filepath = 'public/images/uploads/'+filename;
+  
 
   
   
 
   user_promise = importantMethods.currentUser(req);
   user_promise.then(function(user){
-    
-    
+  
 
-    fs.writeFile(filepath, data, function(err, data){
-      if (err){
-        throw err;
-      }  
-
-      models.Attachment.create({
-        user_id: user.id,
-        original_file_name: user_give_filename,   // file name given by customer
-        file_name: filename            // filename of file created by code to store data
-      },{
-        include: [{
-          model: models.User,
-          as: 'user'
-        }]
-      }).then(function(created_attachment){
-        
-        
-        
-        
-        attachments_promise = models.Attachment.findAll({
-          where: {
-            user_id: user.id
-          },
-          include: [{
-            model: models.User,
-            as: 'user'
-        }] 
-        });
-        attachments_promise.then(function(atts){
-          
-          // 
-          
-          
-        });
-        res.status("200");
-        res.send("your text is saved");
-      });
-     
+    file_exists_promise = models.Attachment.findAll({
+      // user_id: user.id,
+      // original_file_name: user_give_filename,
+      where: Sequelize.and(
+        {user_id: user.id},
+        {original_file_name: user_give_filename}
+      )
     });
 
+    file_exists_promise.then(function(files){
+      // console.log(fil)
+      if(files.length > 0){
+        filename = files[0].file_name;
+        filepath = 'public/images/uploads/'+filename;
+      }
+
+      fs.writeFile(filepath, data, function(err, data){
+        if (err){
+          throw err;
+        }  
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        console.log("user_given_file_name" + files.length);
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        if(files.length < 1){
+          models.Attachment.create({
+            user_id: user.id,
+            original_file_name: user_give_filename,   // file name given by customer
+            file_name: filename            // filename of file created by code to store data
+          },{
+            include: [{
+              model: models.User,
+              as: 'user'
+            }]
+          }).then(function(created_attachment){
+            res.status("200");
+            res.send("your text is saved");
+          });
+        }
+        else{
+          res.status("200");
+          res.send("your text is saved");
+        }
+        // fs.close();
+      });
+    
+    });
+    
   })
 
 });
