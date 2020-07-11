@@ -24,8 +24,7 @@
     "mysql2": "^1.6.4",
     "node-cmd": "^3.0.0",
     "pry": "^0.8.7",
-    "sequelize": "^4.42.0",
-    "windows-build-tools": "^5.2.2"
+    "sequelize": "^4.42.0"
   },
   "devDependencies": {
     "sequelize-cli": "^5.4.0"
